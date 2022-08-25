@@ -38,16 +38,17 @@ class MyServer(BaseHTTPRequestHandler):
         self.wfile.write(bytes("  color: white;", "utf-8"))
         self.wfile.write(bytes("}", "utf-8"))
         self.wfile.write(bytes('</style>', "utf-8"))
-        self.wfile.write(bytes("</head><body>", "utf-8")) 
+        self.wfile.write(bytes('</head><body style="background-color: #000000" text="#ffffff">', "utf-8")) 
         self.wfile.write(bytes('         <div class="topnav">', "utf-8"))
         self.wfile.write(bytes('  <a class="active" href="#home">Home</a>', "utf-8"))
         self.wfile.write(bytes('  <a href="#news">News</a>', "utf-8"))
         self.wfile.write(bytes('  <a href="#contact">Contact</a>', "utf-8"))
         self.wfile.write(bytes('  <a href="#about">About</a>', "utf-8"))
-        self.wfile.write(bytes("<p>Request: %s This is an example web server.                             <a href='#login'>User</a></p>" % self.path, "utf-8"))
+        self.wfile.write(bytes("<p>Request: %s This is an example web server.                             <a href='#login'>Sign Up / Sign In</a></p>" % self.path, "utf-8"))
         self.wfile.write(bytes("</div>", "utf-8"))
         from rss_parser import Parser
-        from requests import get        
+        from requests import get
+        self.wfile.write(bytes('<div id="psxhax">', "utf-8"))
         rss_url = "https://www.psxhax.com/articles/index.rss"
         xml = get(rss_url)
         parser = Parser(xml=xml.content, limit=None)
@@ -56,7 +57,9 @@ class MyServer(BaseHTTPRequestHandler):
         feed2 = " "
         for item in feed.feed:
             feed2 = feed2 + "<br>" + item.title
-        self.wfile.write(bytes("<p> %s </p><br><br>" % feed2, "utf-8" ))           
+        self.wfile.write(bytes("<p> %s </p>" % feed2, "utf-8" ))           
+        self.wfile.write(bytes("</div>", "utf-8"))
+        self.wfile.write(bytes('<div id="yts">', "utf-8"))
         rss_url = "https://yts.mx/rss"
         xml = get(rss_url)
         parser = Parser(xml=xml.content, limit=None)
@@ -65,7 +68,9 @@ class MyServer(BaseHTTPRequestHandler):
         feed2 = " "
         for item in feed.feed:
             feed2 = feed2 + "<br>" + item.title
-        self.wfile.write(bytes("<p> %s </p><br><br>" % feed2, "utf-8" ))
+        self.wfile.write(bytes("<p> %s </p>" % feed2, "utf-8" ))
+        self.wfile.write(bytes("</div>", "utf-8"))
+        self.wfile.write(bytes('<div id="wololo">', "utf-8"))
         rss_url = "http://wololo.net/feed"
         xml = get(rss_url)
         parser = Parser(xml=xml.content, limit=None)
@@ -74,7 +79,8 @@ class MyServer(BaseHTTPRequestHandler):
         feed2 = " "
         for item in feed.feed:
             feed2 = feed2 + "<br>" + item.title
-        self.wfile.write(bytes("<p> %s </p><br><br>" % feed2, "utf-8" ))
+        self.wfile.write(bytes("<p> %s </p>" % feed2, "utf-8" ))
+        self.wfile.write(bytes("</div>", "utf-8"))
         self.wfile.write(bytes("</body></html>", "utf-8"))
 
 if __name__ == "__main__":
